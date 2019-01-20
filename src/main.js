@@ -5,4 +5,4 @@ import ReactDOM from 'react-dom'
 // 导入项目的根组件
 import App from './components/App.js'
 
-ReactDOM.render(<App></App>, document.getElementById('app'))
+ReactDOM.render(<App></App>, document.getElementById('antD-resume-root'))
