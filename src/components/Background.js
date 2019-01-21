@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import {
-  Layout, Menu, Icon,
-} from 'antd';
+import { Route, Link } from "react-router-dom";
+
+import BackgroundContent from "./BackgroundContent.js";
+import { Layout, Menu, Icon } from "antd";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -15,8 +16,8 @@ class Background extends Component {
         <Sider width={200} style={{ background: "#fff" }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
             style={{ height: "100%", borderRight: 0 }}
           >
             <SubMenu
@@ -24,7 +25,7 @@ class Background extends Component {
               title={
                 <span>
                   <Icon type="user" />
-                  Summary
+                  <Link to="/background/summary/1">Summary</Link>
                 </span>
               }
             >
@@ -38,29 +39,19 @@ class Background extends Component {
               title={
                 <span>
                   <Icon type="laptop" />
-                  Education
+                  <Link to="/background/education/1">Education</Link>
                 </span>
               }
-            >
-              <Menu.Item key="5">option5</Menu.Item>
-              <Menu.Item key="6">option6</Menu.Item>
-              <Menu.Item key="7">option7</Menu.Item>
-              <Menu.Item key="8">option8</Menu.Item>
-            </SubMenu>
+            />
             <SubMenu
               key="sub3"
               title={
                 <span>
                   <Icon type="notification" />
-                  Experience
+                  <Link to="/background/experience/1">Experience</Link>
                 </span>
               }
-            >
-              <Menu.Item key="9">option9</Menu.Item>
-              <Menu.Item key="10">option10</Menu.Item>
-              <Menu.Item key="11">option11</Menu.Item>
-              <Menu.Item key="12">option12</Menu.Item>
-            </SubMenu>
+            />
           </Menu>
         </Sider>
         <Layout style={{ paddingLeft: "2px" }}>
@@ -72,7 +63,7 @@ class Background extends Component {
               minHeight: 280
             }}
           >
-            Content
+            <Route path="/background/:menu/:page" exact component={BackgroundContent} />
           </Content>
         </Layout>
       </Layout>
