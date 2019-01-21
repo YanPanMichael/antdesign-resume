@@ -63,7 +63,7 @@ class Background extends Component {
               minHeight: 280
             }}
           >
-            <Route path="/background/:menu/:page" exact component={BackgroundContent} />
+            <Route exact path="/background/:menu/:page" component={BackgroundContent} />
           </Content>
         </Layout>
       </Layout>
