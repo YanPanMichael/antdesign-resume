@@ -10,10 +10,10 @@ class BackgroundContent extends Component {
     }
   }
   
-  componentWillUnmount() {
+  componentWillMount() {
     console.log("OKKK");
     
-    fetch('http://127.0.0.1:5500/')
+    fetch('https://www.baidu.com/home/msg')
     .then(response => {
       return response.json()
     })
