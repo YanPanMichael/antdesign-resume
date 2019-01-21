@@ -21,15 +21,15 @@ class App extends Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[window.location.hash.split('/')[1]]}
             style={{ lineHeight: "64px" }}
           >
-            <Menu.Item key="1"><Link to="./home">Home</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="./resume">Resume</Link></Menu.Item>
-            <Menu.Item key="3"><Link to="./background">Background</Link></Menu.Item>
+            <Menu.Item key="home"><Link to="./home">Home</Link></Menu.Item>
+            <Menu.Item key="resume"><Link to="./resume">Resume</Link></Menu.Item>
+            <Menu.Item key="background"><Link to="./background">Background</Link></Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ 'background-color': '#fff' }}>
+        <Content style={{ backgroundColor: '#fff' }}>
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/background" component={Background} />
