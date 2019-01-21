@@ -29,7 +29,7 @@ class App extends Component {
             <Menu.Item key="background"><Link to="./background">Background</Link></Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ backgroundColor: '#fff' }}>
+        <Content style={{ backgroundColor: '#fff', flex: 1 }}>
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
           <Route path="/background" component={Background} />
