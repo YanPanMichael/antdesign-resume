@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import data from '../mockData/mockData.js';
+
 class BackgroundContent extends Component {
 
   constructor(props) {
