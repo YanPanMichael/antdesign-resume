@@ -1,21 +1,34 @@
 .itemStyle {
   border: solid 1px #ddd;
+  cursor: pointer;
+  text-align: center;
+  width: 220px;
+  margin: 10px;
+  padding: 10px 7px;
+  box-shadow: 0 0 6px #ddd;
+  transition: all 0.3s ease;
+
   .itemImg {
-    height: 300px;
+    height: 270px;
   }
   .itemTitle {
-    text-align: center;
+    
   }
   .itemDirector {
-    text-align: center;
+    
   }
   .itemYear {
-    text-align: center;
+    
   }
   .itemGenres {
-    text-align: center;
+    
   }
   .itemRating {
-    text-align: center;
+    
+  }
+
+  &:hover {
+    opacity: 0.9;
+    transform: rotate(1deg) scale(1.03);
   }
 }

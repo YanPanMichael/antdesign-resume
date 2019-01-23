@@ -46,7 +46,7 @@ class BackgroundContent extends Component {
     const { dataList, loadComplate } = this.state;
     return (
       <React.Fragment>
-        <section>
+        <section style={{display: 'flex', flexWrap: 'wrap'}}>
           {dataList && dataList.map(item => (
             <RecordItem key={item.id} {...item} />
           ))}
