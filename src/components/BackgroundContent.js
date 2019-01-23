@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import fetchJsonp from 'fetch-jsonp';
 
 // http://api.douban.com/v2/movie/top250?start=25&count=25
 import mockdata from "../mockData/mockData.js";
-
-import fetchJsonp from 'fetch-jsonp';
 import { Spin, Alert } from "antd";
+import RecordItem from './RecordItem';
 
 class BackgroundContent extends Component {
   constructor(props) {
@@ -46,10 +46,9 @@ class BackgroundContent extends Component {
     const { dataList, loadComplate } = this.state;
     return (
       <React.Fragment>
-        <div>
-          {loadComplate && `BackgroundContent --- ${menu} ${page}`}
+        <section>
           {dataList && dataList.map(item => (
-            <div key={item.id}>{item.title}</div>
+            <RecordItem key={item.id} {...item} />
           ))}
           {!loadComplate && (
             <Spin tip="Loading...">
@@ -60,7 +59,7 @@ class BackgroundContent extends Component {
               />
             </Spin>
           )}
-        </div>
+        </section>
       </React.Fragment>
     );
   }
