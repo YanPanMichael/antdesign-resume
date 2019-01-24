@@ -4,8 +4,9 @@ import fetchJsonp from 'fetch-jsonp';
 
 // http://api.douban.com/v2/movie/top250?start=25&count=25
 import mockdata from "../mockData/mockData.js";
-import { Spin, Alert } from "antd";
+import { Spin, Alert, Pagination } from "antd";
 import RecordItem from './RecordItem';
+import mockData from "../mockData/mockData.js";
 
 class BackgroundContent extends Component {
   constructor(props) {
@@ -17,19 +18,17 @@ class BackgroundContent extends Component {
   }
 
   componentWillMount() {
-    console.log("OKKK " + new Date());
     this.loadDataFromServices();
   }
 
   loadDataFromServices() {
     setTimeout(() => {
-      console.log("fff "+new Date());
       this.setState({
         loadComplate: true,
         dataList: mockdata.subjects,
       });
     }, 2000);
-    // fetchJsonp("http://api.douban.com/v2/movie/top250?start=25&count=25")
+    // fetchJsonp("http://api.douban.com/v2/movie/top250?start=1&count=10")
     //   .then(function(response) {
     //     return response.json();
     //   })
@@ -46,19 +45,26 @@ class BackgroundContent extends Component {
     const { dataList, loadComplate } = this.state;
     return (
       <React.Fragment>
-        <section style={{display: 'flex', flexWrap: 'wrap'}}>
-          {dataList && dataList.map(item => (
-            <RecordItem key={item.id} {...item} />
-          ))}
+        <section>
           {!loadComplate && (
-            <Spin tip="Loading...">
-              <Alert
-                message="Please wait a while..."
-                description="Detail is comming..."
-                type="info"
-              />
-            </Spin>
+            <article style={{flex: '1'}}>
+              <Spin tip="Loading..." >
+                <Alert
+                  message="Please wait a while..."
+                  description="Detail is comming..."
+                  type="info"
+                />
+              </Spin>
+            </article>
           )}
+          {loadComplate && dataList && (
+            <article style={{display: 'flex', flexWrap: 'wrap'}}>
+              {dataList.map(item => (
+                <RecordItem key={item.id} {...item} />
+              ))}
+              <Pagination current={1} pageSize={mockData.count} total={mockData.total} defaultCurrent={1} />
+            </article>
+           )}
         </section>
       </React.Fragment>
     );

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Rate } from 'antd';
+
 import styles from './RecordItem.scss';
 
 class RecordItem extends Component {
@@ -13,7 +15,7 @@ class RecordItem extends Component {
         <h4 className={styles.itemDirector}>{directors.map(el=>el.name).join(', ')}</h4>
         <h4 className={styles.itemYear}>{year}</h4>
         <h4 className={styles.itemGenres}>{genres.join(', ')}</h4>
-        <h4 className={styles.itemRating}>{rating.average}</h4>
+        <Rate disabled defaultValue={Math.floor(rating.average/2)} />
       </div>
     );
   }
