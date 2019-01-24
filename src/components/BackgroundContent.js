@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import fetchJsonp from 'fetch-jsonp';
 
 // http://api.douban.com/v2/movie/top250?start=25&count=25
-import mockdata from "../mockData/mockData.js";
 import { Spin, Alert, Pagination } from "antd";
 import RecordItem from './RecordItem';
-import mockData from "../mockData/mockData.js";
+import top250Data from "../mockData/top250_data.js";
+const comingSoonData = require("../mockData/coming_soon_data.json");
+const intheatersData = require("../mockData/in_theaters_data.json");
 
 class BackgroundContent extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class BackgroundContent extends Component {
     setTimeout(() => {
       this.setState({
         loadComplate: true,
-        dataList: mockdata.subjects,
+        dataList: top250Data.subjects,
       });
     }, 2000);
     // fetchJsonp("http://api.douban.com/v2/movie/top250?start=1&count=10")
@@ -62,7 +63,7 @@ class BackgroundContent extends Component {
               {dataList.map(item => (
                 <RecordItem key={item.id} {...item} />
               ))}
-              <Pagination current={1} pageSize={mockData.count} total={mockData.total} defaultCurrent={1} />
+              <Pagination current={1} pageSize={top250Data.count} total={top250Data.total} defaultCurrent={1} />
             </article>
            )}
         </section>
