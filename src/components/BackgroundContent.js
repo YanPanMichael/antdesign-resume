@@ -12,62 +12,108 @@ const intheatersData = require("../mockData/in_theaters_data.json");
 class BackgroundContent extends Component {
   constructor(props) {
     super(props);
+    this.mockData = intheatersData;
     this.state = {
-      loadComplate: false,
+      isLoading: true,
       dataList: [],
+      currentMenu: props.match.params.menu,
+      currentPage: parseInt(props.match.params.page) || 1,
+      pagePerCount: 10,
+      total: 0,
     };
   }
-
+  
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.menu !== this.props.match.params.menu) {
+      this.switchMockDataSource(nextProps.match.params.menu);
+      this.setState({
+        currentMenu: nextProps.match.params.menu,
+        currentPage: 1,
+      });
+    } else if(nextProps.match.params.page !== this.props.match.params.page) {
+      this.setState({
+        currentPage: parseInt(nextProps.match.params.page) || 1,
+      });
+    } else {
+      return;
+    }
+  }
+  
+  switchMockDataSource(nextMenu) {
+    switch (nextMenu) {
+      case 'in_theaters':
+      this.mockData = intheatersData;
+      break;
+      case 'coming_soon':
+      this.mockData = comingSoonData;
+      break;
+      case 'top250':
+      this.mockData = top250Data;
+      break;
+    }
+  }
+  
   componentWillMount() {
     this.loadDataFromServices();
   }
 
   loadDataFromServices() {
+    const {currentPage, currentMenu, pagePerCount} = this.state;
     setTimeout(() => {
       this.setState({
-        loadComplate: true,
-        dataList: top250Data.subjects,
+        isLoading: false,
+        dataList: this.mockData.subjects,
+        total: this.mockData.total,
       });
     }, 2000);
-    // fetchJsonp("http://api.douban.com/v2/movie/top250?start=1&count=10")
+    // fetchJsonp(`http://api.douban.com/v2/movie/${currentMenu}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
     //   .then(function(response) {
     //     return response.json();
     //   })
-    //   .then(function(json) {
-    //     console.log("parsed json", json);
+    //   .then(function(data) {
+    //     console.log("parsed json", data);
+    //     this.setState({
+    //       isLoading: false,
+    //       dataList: data.subjects || [],
+    //       total: data.total,
+    //     });
     //   })
-    //   .catch(function(ex) {
-    //     console.log("parsing failed", ex);
+    //   .catch(function(err) {
+    //     console.log("parsing failed", err);
     //   });
   }
 
+  renderBackgroundContentPart() {
+    const { dataList, isLoading, currentPage, total, pagePerCount } = this.state;
+    if(isLoading) {
+      return <article style={{flex: '1'}}>
+        <Spin tip="Loading..." >
+          <Alert
+            message="Centent is Loading..."
+            description="Detail will comming soon..."
+            type="info"
+          />
+        </Spin>
+      </article>
+    } else {
+      return dataList && (
+        <React.Fragment>
+          <article style={{display: 'flex', flexWrap: 'wrap'}}>
+            {dataList.map(item => (
+              <RecordItem key={item.id} {...item} />
+            ))}
+          </article>
+          <Pagination current={currentPage} defaultCurrent={1} defaultPageSize={10} pageSize={pagePerCount} total={total} />
+        </React.Fragment>
+      )
+    }
+  }
+
   render() {
-    const { menu, page } = this.props.match.params;
-    const { dataList, loadComplate } = this.state;
     return (
-      <React.Fragment>
-        <section>
-          {!loadComplate && (
-            <article style={{flex: '1'}}>
-              <Spin tip="Loading..." >
-                <Alert
-                  message="Please wait a while..."
-                  description="Detail is comming..."
-                  type="info"
-                />
-              </Spin>
-            </article>
-          )}
-          {loadComplate && dataList && (
-            <article style={{display: 'flex', flexWrap: 'wrap'}}>
-              {dataList.map(item => (
-                <RecordItem key={item.id} {...item} />
-              ))}
-              <Pagination current={1} pageSize={top250Data.count} total={top250Data.total} defaultCurrent={1} />
-            </article>
-           )}
-        </section>
-      </React.Fragment>
+      <section>
+        {this.renderBackgroundContentPart()}
+      </section>
     );
   }
 }
