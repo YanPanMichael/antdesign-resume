@@ -7,6 +7,7 @@ module.exports = {
     path: path.join(__dirname, './dist'),
     filename: 'bundle.js'
   },
+  devtool: 'eval-source-map',
   plugins: [ // 插件
     new htmlWebpackPlugin({
       template: path.join(__dirname, './src/index.html'),

@@ -24,9 +24,9 @@ class App extends Component {
             defaultSelectedKeys={[window.location.hash.split('/')[1]]}
             style={{ lineHeight: "64px" }}
           >
-            <Menu.Item key="home"><Link to="./home">Home</Link></Menu.Item>
-            <Menu.Item key="resume"><Link to="./resume">Resume</Link></Menu.Item>
-            <Menu.Item key="background"><Link to="./background/summary/1">Background</Link></Menu.Item>
+            <Menu.Item key="home"><Link to="/home">Home</Link></Menu.Item>
+            <Menu.Item key="resume"><Link to="/resume">Resume</Link></Menu.Item>
+            <Menu.Item key="background"><Link to="/background/summary/1">Background</Link></Menu.Item>
           </Menu>
         </Header>
         <Content style={{ backgroundColor: '#fff', flex: 1 }}>

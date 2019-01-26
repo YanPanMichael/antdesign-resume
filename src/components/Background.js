@@ -10,48 +10,71 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 class Background extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectMenu: 'summary',
+    };
+    this.handleChangeMenuFromUrl = this.handleChangeMenuFromUrl.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({
+      selectMenu: this.getOpenedMenuFromUrl() || 'summary',
+    })
+  }
+  
+  componentWillUpdate(nextProps, nextState) {
+    if(nextState.selectMenu !== this.state.selectMenu) {
+      this.setState({
+        selectMenu: this.getOpenedMenuFromUrl() || 'summary',
+      })
+    }
+  }
+  
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.selectMenu !== this.state.selectMenu
+  }
+  
+  getOpenedMenuFromUrl() {
+    return window.location.hash.split('/')[2];
+  }
+
+  handleChangeMenuFromUrl() {
+    this.setState({
+      selectMenu: this.getOpenedMenuFromUrl() || 'summary',
+    })
+  }
+
   render() {
+    const { selectMenu } = this.state;
     return (
       <Layout style={{ height: "100%" }}>
         <Sider width={200} style={{ background: "#fff" }}>
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+            defaultSelectedKeys={[selectMenu]}
+            selectedKeys={[selectMenu]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            <SubMenu
-              key="sub1"
-              title={
+            <Menu.Item key="summary" onClick={this.handleChangeMenuFromUrl}>
+                <Icon type="user" />
                 <span>
-                  <Icon type="user" />
                   <Link to="/background/summary/1">Summary</Link>
                 </span>
-              }
-            >
-              <Menu.Item key="1">option1</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
-              <Menu.Item key="4">option4</Menu.Item>
-            </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                  <Icon type="laptop" />
-                  <Link to="/background/education/1">Education</Link>
-                </span>
-              }
-            />
-            <SubMenu
-              key="sub3"
-              title={
-                <span>
-                  <Icon type="notification" />
-                  <Link to="/background/experience/1">Experience</Link>
-                </span>
-              }
-            />
+            </Menu.Item>
+            <Menu.Item key="education" onClick={this.handleChangeMenuFromUrl}>
+              <Icon type="laptop" />
+              <span>
+                <Link to="/background/education/1">Education</Link>
+              </span>
+            </Menu.Item>
+            <Menu.Item key="experience" onClick={this.handleChangeMenuFromUrl}>
+              <Icon type="notification" />
+              <span>
+                <Link to="/background/experience/1">Experience</Link>
+              </span>
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ paddingLeft: "2px" }}>
