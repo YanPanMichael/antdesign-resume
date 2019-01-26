@@ -21,6 +21,7 @@ class BackgroundContent extends Component {
       pagePerCount: 10,
       total: 0,
     };
+    this.changePagation = this.changePagation.bind(this);
   }
   
   componentWillReceiveProps(nextProps) {
@@ -83,6 +84,10 @@ class BackgroundContent extends Component {
     //   });
   }
 
+  changePagation() {
+
+  }
+
   renderBackgroundContentPart() {
     const { dataList, isLoading, currentPage, total, pagePerCount } = this.state;
     if(isLoading) {
@@ -103,7 +108,7 @@ class BackgroundContent extends Component {
               <RecordItem key={item.id} {...item} />
             ))}
           </article>
-          <Pagination current={currentPage} defaultCurrent={1} defaultPageSize={10} pageSize={pagePerCount} total={total} />
+          <Pagination current={currentPage} defaultCurrent={1} defaultPageSize={10} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
         </React.Fragment>
       )
     }
