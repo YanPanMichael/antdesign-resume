@@ -25,11 +25,9 @@ class Background extends Component {
   }
   
   componentWillUpdate(nextProps, nextState) {
-    if(nextState.selectMenu !== this.state.selectMenu) {
-      this.setState({
-        selectMenu: this.getOpenedMenuFromUrl() || 'summary',
-      })
-    }
+    this.setState({
+      selectMenu: this.getOpenedMenuFromUrl() || 'summary',
+    })
   }
   
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,20 +54,21 @@ class Background extends Component {
             defaultSelectedKeys={[selectMenu]}
             selectedKeys={[selectMenu]}
             style={{ height: "100%", borderRight: 0 }}
+            onClick={this.handleChangeMenuFromUrl}
           >
-            <Menu.Item key="summary" onClick={this.handleChangeMenuFromUrl}>
+            <Menu.Item key="summary" >
                 <Icon type="user" />
                 <span>
                   <Link to="/background/summary/1">Summary</Link>
                 </span>
             </Menu.Item>
-            <Menu.Item key="education" onClick={this.handleChangeMenuFromUrl}>
+            <Menu.Item key="education">
               <Icon type="laptop" />
               <span>
                 <Link to="/background/education/1">Education</Link>
               </span>
             </Menu.Item>
-            <Menu.Item key="experience" onClick={this.handleChangeMenuFromUrl}>
+            <Menu.Item key="experience">
               <Icon type="notification" />
               <span>
                 <Link to="/background/experience/1">Experience</Link>
