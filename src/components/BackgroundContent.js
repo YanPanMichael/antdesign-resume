@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import fetchJsonp from 'fetch-jsonp';
 
-// http://api.douban.com/v2/movie/top250?start=25&count=25
 import { Spin, Alert, Pagination } from "antd";
 import RecordItem from './RecordItem';
 import top250Data from "../mockData/top250_data.js";
@@ -59,6 +58,17 @@ class BackgroundContent extends Component {
       break;
     }
   }
+
+  mapMenuToUrlType(nextMenu) {
+    switch (nextMenu) {
+      case 'summary':
+      return 'in_theaters';
+      case 'education':
+      return 'coming_soon';
+      case 'experience':
+      return 'top250';
+    }
+  }
   
   componentWillMount() {
     this.loadDataFromServices();
@@ -66,34 +76,41 @@ class BackgroundContent extends Component {
 
   loadDataFromServices() {
     const {currentPage, currentMenu, pagePerCount} = this.state;
-    setTimeout(() => {
-      this.switchMockDataSource(currentMenu);
-      this.setState({
-        isLoading: false,
-        dataList: this.mockData.subjects,
-        total: this.mockData.total,
-      });
-    }, 2000);
-    // fetchJsonp(`http://api.douban.com/v2/movie/${currentMenu}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
-    //   .then(function(response) {
-    //     return response.json();
-    //   })
-    //   .then(function(data) {
-    //     console.log("parsed json", data);
-    //     this.switchMockDataSource(currentMenu);    
-    //     this.setState({
-    //       isLoading: false,
-    //       dataList: data.subjects || [],
-    //       total: data.total,
-    //     });
-    //   })
-    //   .catch(function(err) {
-    //     console.log("parsing failed", err);
+    // setTimeout(() => {
+    //   // const mockData = require(`../mockData/${currentMenu}.json`);
+    //   this.switchMockDataSource(currentMenu);
+    //   this.setState({
+    //     isLoading: false,
+    //     dataList: this.mockData.subjects,
+    //     total: this.mockData.total,
     //   });
+    // }, 0);
+
+    const menuTemp = this.mapMenuToUrlType(currentMenu);
+    fetchJsonp(`http://api.douban.com/v2/movie/${menuTemp}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // console.log("parsed json", data);
+        this.setState({
+          isLoading: false,
+          dataList: data.subjects || [],
+          total: data.total,
+        });
+      })
+      .catch((err) => {
+        console.log("parsing failed", err);
+      });
   }
 
-  changePagation() {
+  changePagation(page) {
+    // Method 1: window.loaction.href
+    // console.log(`/#/background/${this.state.currentMenu}/${page}`);
+    // window.location.href = `/#/background/${this.state.currentMenu}/${page}`;
 
+    // Method 2: this.props.history.push
+    this.props.history.push(`/background/${this.state.currentMenu}/${page}`);
   }
 
   renderBackgroundContentPart() {
@@ -116,7 +133,7 @@ class BackgroundContent extends Component {
               <RecordItem key={item.id} {...item} />
             ))}
           </article>
-          <Pagination current={currentPage} defaultCurrent={1} defaultPageSize={10} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
+          <Pagination current={currentPage} defaultCurrent={currentPage} defaultPageSize={pagePerCount} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
         </React.Fragment>
       )
     }
