@@ -103,7 +103,7 @@ class BackgroundContent extends Component {
         <Spin tip="Loading..." >
           <Alert
             message="Centent is Loading..."
-            description={"Detail of " + currentMenu + " will comming soon..."}
+            description={`Detail of ${currentMenu} will comming soon...`}
             type="info"
           />
         </Spin>
