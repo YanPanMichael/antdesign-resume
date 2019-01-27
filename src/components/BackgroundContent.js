@@ -12,11 +12,11 @@ const intheatersData = require("../mockData/in_theaters_data.json");
 class BackgroundContent extends Component {
   constructor(props) {
     super(props);
-    this.mockData = intheatersData;
+    this.mockData = intheatersData || {};
     this.state = {
       isLoading: true,
       dataList: [],
-      currentMenu: props.match.params.menu,
+      currentMenu: props.match.params.menu || 'summary',
       currentPage: parseInt(props.match.params.page) || 1,
       pagePerCount: 10,
       total: 0,
@@ -26,7 +26,7 @@ class BackgroundContent extends Component {
   
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.menu !== this.props.match.params.menu) {
-      this.switchMockDataSource(nextProps.match.params.menu);
+      // this.switchMockDataSource(nextProps.match.params.menu);
       this.setState({
         isLoading: true,
         currentMenu: nextProps.match.params.menu,
@@ -67,6 +67,7 @@ class BackgroundContent extends Component {
   loadDataFromServices() {
     const {currentPage, currentMenu, pagePerCount} = this.state;
     setTimeout(() => {
+      this.switchMockDataSource(currentMenu);
       this.setState({
         isLoading: false,
         dataList: this.mockData.subjects,
@@ -79,6 +80,7 @@ class BackgroundContent extends Component {
     //   })
     //   .then(function(data) {
     //     console.log("parsed json", data);
+    //     this.switchMockDataSource(currentMenu);    
     //     this.setState({
     //       isLoading: false,
     //       dataList: data.subjects || [],
