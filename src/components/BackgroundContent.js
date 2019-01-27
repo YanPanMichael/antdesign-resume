@@ -84,7 +84,7 @@ class BackgroundContent extends Component {
     //     dataList: this.mockData.subjects,
     //     total: this.mockData.total,
     //   });
-    // }, 0);
+    // }, 1000);
 
     const menuTemp = this.mapMenuToUrlType(currentMenu);
     fetchJsonp(`http://api.douban.com/v2/movie/${menuTemp}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
