@@ -28,12 +28,18 @@ class BackgroundContent extends Component {
     if(nextProps.match.params.menu !== this.props.match.params.menu) {
       this.switchMockDataSource(nextProps.match.params.menu);
       this.setState({
+        isLoading: true,
         currentMenu: nextProps.match.params.menu,
         currentPage: 1,
+      }, () => {
+        this.loadDataFromServices();
       });
-    } else if(nextProps.match.params.page !== this.props.match.params.page) {
+    }else if(nextProps.match.params.page !== this.props.match.params.page) {
       this.setState({
+        isLoading: true,
         currentPage: parseInt(nextProps.match.params.page) || 1,
+      }, () => {
+        this.loadDataFromServices();
       });
     } else {
       return;
@@ -42,13 +48,13 @@ class BackgroundContent extends Component {
   
   switchMockDataSource(nextMenu) {
     switch (nextMenu) {
-      case 'in_theaters':
+      case 'summary':
       this.mockData = intheatersData;
       break;
-      case 'coming_soon':
+      case 'education':
       this.mockData = comingSoonData;
       break;
-      case 'top250':
+      case 'experience':
       this.mockData = top250Data;
       break;
     }
@@ -89,13 +95,13 @@ class BackgroundContent extends Component {
   }
 
   renderBackgroundContentPart() {
-    const { dataList, isLoading, currentPage, total, pagePerCount } = this.state;
+    const { dataList, isLoading, currentPage, total, pagePerCount, currentMenu } = this.state;
     if(isLoading) {
       return <article style={{flex: '1'}}>
         <Spin tip="Loading..." >
           <Alert
             message="Centent is Loading..."
-            description="Detail will comming soon..."
+            description={"Detail of " + currentMenu + " will comming soon..."}
             type="info"
           />
         </Spin>
