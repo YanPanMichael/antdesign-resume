@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import fetchJsonp from 'fetch-jsonp';
 
 import { Spin, Alert, Pagination } from "antd";
@@ -9,8 +10,11 @@ const comingSoonData = require("../mockData/coming_soon_data.json");
 const intheatersData = require("../mockData/in_theaters_data.json");
 
 class BackgroundContent extends Component {
-  constructor(props) {
-    super(props);
+  static contextTypes = {
+    router: PropTypes.object
+  }
+  constructor(props, context) {
+    super(props, context);
     this.mockData = intheatersData || {};
     this.state = {
       isLoading: true,
@@ -47,14 +51,6 @@ class BackgroundContent extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.isLoading !== this.state.isLoading || nextProps.match.params.menu !== this.props.match.params.menu || nextProps.match.params.page !== this.props.match.params.page
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log();
-  }
-
-  componentWillUpdate() {
-    console.log();
   }
   
   switchMockDataSource(nextMenu) {
@@ -123,6 +119,7 @@ class BackgroundContent extends Component {
 
     // Method 2: this.props.history.push
     this.props.history.push(`/background/${this.state.currentMenu}/${page}`);
+    // this.context.router.history.push(`/background/${this.state.currentMenu}/${page}`);
   }
 
   renderBackgroundContentPart() {
@@ -162,4 +159,4 @@ class BackgroundContent extends Component {
 
 BackgroundContent.propTypes = {};
 
-export default BackgroundContent;
+export default withRouter(BackgroundContent);
