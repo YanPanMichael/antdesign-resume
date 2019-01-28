@@ -44,6 +44,18 @@ class BackgroundContent extends Component {
       return;
     }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.isLoading !== this.state.isLoading || nextProps.match.params.menu !== this.props.match.params.menu || nextProps.match.params.page !== this.props.match.params.page
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log();
+  }
+
+  componentWillUpdate() {
+    console.log();
+  }
   
   switchMockDataSource(nextMenu) {
     switch (nextMenu) {
@@ -76,32 +88,32 @@ class BackgroundContent extends Component {
 
   loadDataFromServices() {
     const {currentPage, currentMenu, pagePerCount} = this.state;
-    // setTimeout(() => {
-    //   // const mockData = require(`../mockData/${currentMenu}.json`);
-    //   this.switchMockDataSource(currentMenu);
-    //   this.setState({
-    //     isLoading: false,
-    //     dataList: this.mockData.subjects,
-    //     total: this.mockData.total,
-    //   });
-    // }, 1000);
-
-    const menuTemp = this.mapMenuToUrlType(currentMenu);
-    fetchJsonp(`http://api.douban.com/v2/movie/${menuTemp}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // console.log("parsed json", data);
-        this.setState({
-          isLoading: false,
-          dataList: data.subjects || [],
-          total: data.total,
-        });
-      })
-      .catch((err) => {
-        console.log("parsing failed", err);
+    setTimeout(() => {
+      // const mockData = require(`../mockData/${currentMenu}.json`);
+      this.switchMockDataSource(currentMenu);
+      this.setState({
+        isLoading: false,
+        dataList: this.mockData.subjects,
+        total: this.mockData.total,
       });
+    }, 1000);
+
+    // const menuTemp = this.mapMenuToUrlType(currentMenu);
+    // fetchJsonp(`http://api.douban.com/v2/movie/${menuTemp}?start=${(currentPage-1)*pagePerCount}&count=${pagePerCount}`)
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     // console.log("parsed json", data);
+    //     this.setState({
+    //       isLoading: false,
+    //       dataList: data.subjects || [],
+    //       total: data.total,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log("parsing failed", err);
+    //   });
   }
 
   changePagation(page) {
@@ -133,7 +145,7 @@ class BackgroundContent extends Component {
               <RecordItem key={item.id} {...item} />
             ))}
           </article>
-          <Pagination current={currentPage} defaultCurrent={currentPage} defaultPageSize={pagePerCount} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
+          <Pagination current={currentPage} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
         </React.Fragment>
       )
     }
