@@ -91,6 +91,11 @@ class Background extends Component {
             {/* 如果想要从 路由规则中，提取 参数，需要使用 this.props.match.params */}
             {/* /movie/detail/2158490 */}
             {/* 注意：哪怕为 路由启用了 exact 精确匹配模式，也会从上到下，把所有的 路由规则匹配一遍 */}
+            <Switch>
+              {/* 使用 路由中的 Switch 组件，能够指定，如果前面的路由规则优先匹配到了，则放弃匹配后续的路由 */}
+              <Route exact path="/background/detail/:id" component={BackgroundDetail}></Route>
+              <Route exact path="/background/:menu/:page" component={BackgroundContent}></Route>
+            </Switch>
           </Content>
         </Layout>
       </Layout>
