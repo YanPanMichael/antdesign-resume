@@ -86,7 +86,7 @@ class Background extends Component {
               minHeight: 280
             }}
           >
-            <Route path="/background/:menu/:page" component={BackgroundContent} />
+            {/* <Route path="/background/:menu/:page" component={BackgroundContent} /> */}
             {/* 在匹配路由规则的时候，这里提供了两个参数 */}
             {/* 如果想要从 路由规则中，提取 参数，需要使用 this.props.match.params */}
             {/* /movie/detail/2158490 */}

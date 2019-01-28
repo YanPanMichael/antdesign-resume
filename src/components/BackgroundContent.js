@@ -6,6 +6,7 @@ import fetchJsonp from 'fetch-jsonp';
 import { Spin, Alert, Pagination } from "antd";
 import RecordItem from './RecordItem';
 import top250Data from "../mockData/top250_data.js";
+import createHistory from 'history/createBrowserHistory';
 const comingSoonData = require("../mockData/coming_soon_data.json");
 const intheatersData = require("../mockData/in_theaters_data.json");
 
@@ -139,7 +140,7 @@ class BackgroundContent extends Component {
         <React.Fragment>
           <article style={{display: 'flex', flexWrap: 'wrap'}}>
             {dataList.map(item => (
-              <RecordItem key={item.id} {...item} />
+              <RecordItem key={item.id} {...item} history={createHistory()} />
             ))}
           </article>
           <Pagination current={currentPage} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
