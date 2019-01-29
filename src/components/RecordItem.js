@@ -11,8 +11,10 @@ class RecordItem extends Component {
 
   jumpToDetailPage = (event) => {
     event.stopPropagation();
+    //method 1
     const history = createHashHistory();
     history.push(`/background/detail/${this.props.id}`);
+    //method 2
     // window.location.href = `/#/background/detail/${this.props.id}`;
   }
 
