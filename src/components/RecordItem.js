@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from "react-router-dom";
+import { createHashHistory } from 'history';
 
 import { Rate } from 'antd';
 
@@ -10,8 +11,9 @@ class RecordItem extends Component {
 
   jumpToDetailPage = (event) => {
     event.stopPropagation();
-    // this.props.history.push(`/#/background/detail/${this.props.id}`);
-    window.location.href = `/#/background/detail/${this.props.id}`;
+    const history = createHashHistory();
+    history.push(`/background/detail/${this.props.id}`);
+    // window.location.href = `/#/background/detail/${this.props.id}`;
   }
 
   render() {
