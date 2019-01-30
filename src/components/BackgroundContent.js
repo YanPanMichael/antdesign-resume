@@ -143,7 +143,9 @@ class BackgroundContent extends Component {
               <RecordItem key={item.id} {...item} />
             ))}
           </article>
-          <Pagination current={currentPage} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
+          {/* <div style={{position: "fixed", bottom: this.props.footerRefHeight+10}}> */}
+            <Pagination current={currentPage} pageSize={pagePerCount} total={total} onChange={this.changePagation} />
+          {/* </div> */}
         </React.Fragment>
       )
     }

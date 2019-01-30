@@ -94,7 +94,8 @@ class Background extends Component {
             <Switch>
               {/* 使用 路由中的 Switch 组件，能够指定，如果前面的路由规则优先匹配到了，则放弃匹配后续的路由 */}
               <Route exact path="/background/detail/:id" component={BackgroundDetail}></Route>
-              <Route exact path="/background/:menu/:page" component={BackgroundContent}></Route>
+              {/* <Route exact path="/background/:menu/:page" component={BackgroundContent}></Route> */}
+              <Route exact path="/background/:menu/:page" render={(props) => (<BackgroundContent footerRefHeight={this.props.footerRefHeight} {...props}/>)}></Route>
             </Switch>
           </Content>
         </Layout>

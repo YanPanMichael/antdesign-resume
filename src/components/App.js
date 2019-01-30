@@ -13,6 +13,19 @@ import Background from "./Background";
 import styles from "../css/App.scss";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      footerRefHeight: 0
+    }
+  }
+
+  componentDidMount() {
+    this.setState({
+      footerRefHeight: this.footerRef.getBoundingClientRect().height || 0
+    })
+  }
+
   render() {
     return (
       <Layout className={styles.layout}>
@@ -32,11 +45,14 @@ class App extends Component {
         <Content style={{ backgroundColor: '#fff', flex: 1 }}>
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
-          <Route path="/background" component={Background} />
+          {/* <Route path="/background" component={Background} /> */}
+          <Route path="/background" render={(props) => (<Background footerRefHeight={this.state.footerRefHeight} {...props}/>)} />
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Yan Pan ©2019 Created by AntD
-        </Footer>
+        <footer ref={(el) => (this.footerRef = el)}>
+          <Footer style={{ textAlign: "center" }}>
+            Yan Pan ©2019 Created by AntD
+          </Footer>
+        </footer>
       </Layout>
     );
   }
