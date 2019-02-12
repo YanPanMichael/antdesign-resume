@@ -43,6 +43,16 @@ class App extends Component {
           </Menu>
         </Header>
         <Content style={{ backgroundColor: '#fff', flex: 1 }}>
+          <div className={styles.loadEffect}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
           {/* <Route path="/background" component={Background} /> */}
