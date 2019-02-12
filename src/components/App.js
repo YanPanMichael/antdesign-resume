@@ -9,6 +9,7 @@ const { SubMenu } = Menu;
 import Home from "./Home";
 import Resume from "./Resume";
 import Background from "./Background";
+import LoadingMask from "./LoadingMask";
 
 import styles from "../css/App.scss";
 
@@ -16,14 +17,29 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      footerRefHeight: 0
+      footerRefHeight: 0,
+      loadingMask: true,
     }
   }
 
   componentDidMount() {
+    this.loadDataFromTimeout().then(() =>
+      this.setState({
+        loadingMask: false,
+      })
+    ).catch(console.log("err"));
     this.setState({
       footerRefHeight: this.footerRef.getBoundingClientRect().height || 0
     })
+  }
+
+  loadDataFromTimeout() {
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      },3000)
+    })
+    return p;
   }
 
   render() {
@@ -43,16 +59,7 @@ class App extends Component {
           </Menu>
         </Header>
         <Content style={{ backgroundColor: '#fff', flex: 1 }}>
-          <div className={styles.loadEffect}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+          <LoadingMask loadswitch={this.state.loadingMask} />
           <Route path="/home" component={Home} />
           <Route path="/resume" component={Resume} />
           {/* <Route path="/background" component={Background} /> */}
