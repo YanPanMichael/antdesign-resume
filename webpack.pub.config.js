@@ -3,6 +3,7 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const extractTextWebpackPlugin = require('extract-text-webpack-plugin');
+const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -43,7 +44,8 @@ module.exports = {
     // new webpack.optimize.DedupePlugin({ //设置为产品上线环境，进一步压缩代码
     //   'process.env.NODE_ENV': '"production"'
     // })
-    new extractTextWebpackPlugin('css/style.css')
+    new extractTextWebpackPlugin('css/style.css'),
+    new optimizeCssAssetsWebpackPlugin(),
   ],
   module: {
     rules: [
