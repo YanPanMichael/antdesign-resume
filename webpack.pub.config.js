@@ -35,8 +35,12 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: { // 配置压缩选项
-        warnings: false // 移除警告
-      }
+        warnings: false, // 移除警告
+      },
+      comments: false,
+      sourceMap: true,
+      minimize: true,
+      exclude: [/\.min\.js$/gi],
     }),
     new webpack.DefinePlugin({ //设置为产品上线环境，进一步压缩代码
       'process.env.NODE_ENV': '"production"'
@@ -46,6 +50,9 @@ module.exports = {
     // })
     new extractTextWebpackPlugin('css/style.css'),
     new optimizeCssAssetsWebpackPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
   ],
   module: {
     rules: [
